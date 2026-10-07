@@ -1,0 +1,143 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", monospace;
+
+  --color-ink: #000000;
+  --color-panel: #0c0c10;
+  --color-elev: #15151b;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-muted: #8b8b98;
+  --color-soft: #c9c9d3;
+  --color-magenta: #ff3ea5;
+  --color-violet: #8a5cff;
+  --color-azure: #3b82f6;
+  --color-ember: #ff8a3d;
+
+  --animate-drift: drift 60s linear infinite;
+  --animate-float: float 9s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+}
+
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@property --env-from { syntax: "<color>"; inherits: true; initial-value: #000000; }
+@property --env-to { syntax: "<color>"; inherits: true; initial-value: #050507; }
+@property --env-accent { syntax: "<color>"; inherits: true; initial-value: #7c5cff; }
+
+.ambient {
+  transition: --env-from 12s ease, --env-to 12s ease, --env-accent 12s ease;
+  background:
+    radial-gradient(60% 45% at 50% 108%, color-mix(in srgb, var(--env-accent) 24%, transparent), transparent 70%),
+    radial-gradient(40% 35% at 85% -5%, color-mix(in srgb, var(--env-accent) 10%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--env-from) 0%, var(--env-to) 100%);
+}
+
+:root {
+  color-scheme: dark;
+  transition: --env-accent 12s ease;
+  /* Environmental Feedback Engine: updated live from the backend decision. */
+  --env-from: #000000;
+  --env-to: #050507;
+  --env-accent: #7c5cff;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: #000;
+  color: #ededf2;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: color-mix(in srgb, var(--env-accent) 45%, transparent); }
+
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.12) transparent; }
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 8px; }
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #ffb36b 0%, #ff3ea5 40%, #8a5cff 75%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-orb {
+  background: radial-gradient(120% 120% at 30% 20%, #ffb36b 0%, #ff3ea5 40%, #8a5cff 80%, #3b82f6 100%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 10px 30px -8px rgba(255, 62, 165, 0.55);
+}
+
+/* Assistant markdown */
+.senra-md { line-height: 1.7; }
+.senra-md pre { background: #0b0b10 !important; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 16px; overflow-x: auto; }
+.senra-md code:not(pre code) { background: rgba(255,255,255,0.08); padding: 0.1em 0.35em; border-radius: 6px; font-size: 0.88em; }
+.senra-md code::before, .senra-md code::after { content: none !important; }
+.senra-md table { display: block; overflow-x: auto; }
+
+.caret-wrap .senra-md > :last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  margin-left: 4px;
+  border-radius: 999px;
+  background: var(--env-accent);
+  box-shadow: 0 0 12px var(--env-accent);
+  animation: pulse-soft 1s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+.section-title em {
+  background: linear-gradient(100deg, #ffb36b 0%, #ff3ea5 40%, #8a5cff 75%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.08em;
+}
+
+/* "Thinking…" label with a soft light sweep */
+.thinking-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.95) 50%, rgba(255,255,255,0.35) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}

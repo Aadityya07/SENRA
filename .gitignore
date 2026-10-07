@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+backend/.venv/
+.venv/
+
+# Local data (conversations, emotional memory)
+backend/data/
+*.db
+*.db-wal
+*.db-shm
+
+# Node
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
